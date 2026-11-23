@@ -144,22 +144,11 @@ function execute_once_dom_loaded() {
   } catch (e) { }
 
   var eventHandler = (evt) => {
-    // We handle key events ourselves.
-    console.info(
-      'Key event:',
-      evt.type,
-      evt.keyCode,
-      evt.keyCode,
-      evt.defaultPrevented
-    );
-
     if (evt.keyCode in keys) {
       const percentage = keys[evt.keyCode] * 10;
       const video = document.querySelector('video');
       video.currentTime = (percentage / 100) * video.duration;
     }
-
-    const container = document.getElementById('container');
 
     if (window.screenTurnedOffAt && Date.now() - window.screenTurnedOffAt > 1000) {
       for (const child of document.body.children) {
@@ -171,6 +160,7 @@ function execute_once_dom_loaded() {
     }
 
     if (configRead('enableScreenDimming')) {
+      const container = document.getElementById('container');
       if (keyTimeout) {
         clearTimeout(keyTimeout);
       }
@@ -207,7 +197,7 @@ function execute_once_dom_loaded() {
     } else if (evt.keyCode == 39) {
       // Right key, for PiP
       if (evt.type === 'keydown') {
-        if (document.querySelector('ytlr-search-text-box > .zylon-focus') && window.isPipPlaying) {
+        if (window.isPipPlaying && document.querySelector('ytlr-search-text-box > .zylon-focus')) {
           const ytlrPlayer = document.querySelector('ytlr-player');
           ytlrPlayer.style.setProperty('background-color', 'rgb(0, 0, 0)');
           pipToFullscreen();
