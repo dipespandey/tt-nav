@@ -28,7 +28,7 @@ with ZipFile(args.official_apk) as source, ZipFile(args.output_apk, "w") as targ
             before = data
             for encoding in ("ascii", "utf-16le"):
                 for old, new in ((original, variant), (b"TizenTube", b"TT Nav TV")):
-                    if old == b"TizenTube" and entry.filename != "resources.arsc":
+                    if old == b"TizenTube" and entry.filename.endswith(".dex"):
                         continue
                     data = data.replace(old.decode().encode(encoding), new.decode().encode(encoding))
             if entry.filename.endswith(".dex") and before != data:
