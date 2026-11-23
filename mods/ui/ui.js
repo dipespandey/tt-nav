@@ -62,6 +62,11 @@ function execute_once_dom_loaded() {
     } catch (e) { }
   }
 
+  if (!ui && window.tectonicConfig?.featureSwitches) {
+    window.tectonicConfig.featureSwitches.enableOnScrollLinearAnimation = false;
+    window.tectonicConfig.featureSwitches.enableListAnimations = false;
+  }
+
   // We handle key events ourselves.
   window.__spatialNavigation__.keyMode = 'NONE';
 
